@@ -44,7 +44,6 @@ const replyMessage = (message) => {
 			if (result.action && result.action.done){
 				if (result.action.slug === 'weather') {
 					var place = result.getMemory('place')
-					console.log(result);
 					weather(place.lat, place.lng, place.formatted).then( (res) => {
 						message.addReply(res)
 						message.addReply({
