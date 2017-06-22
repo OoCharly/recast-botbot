@@ -9,7 +9,6 @@ const weather = (lat, lon, place) => {
 	}
 	return rp(options).then(result => {
 		const body = JSON.parse(result);
-		console.log(body);
 		return Promise.resolve(
 			{ type: "card", content:{
 				title: `${place}`,
