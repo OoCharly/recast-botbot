@@ -40,11 +40,11 @@ const replyMessage = (message) => {
 			result.replies.forEach(replyContent => message.addReply({ type: 'text', content: replyContent }))
 		}
 		// Send all replies
-		message.reply()
-		.then(() => {
+		message.reply().then(() => {
 			if (result.action && result.action.done){
 				if (result.action.slug === 'weather') {
 					var place = result.getMemory('place')
+					console.log(result);
 					weather(place.lat, place.lng, place.formatted).then( (res) => {
 						message.addReply(res)
 						message.addReply({
@@ -63,20 +63,51 @@ const replyMessage = (message) => {
 								]
 							}
 						})
+						return message.reply()
 					})
 				}else if (result.action.slug === 'help'){
-					message.addReply({ type:'text', content:'Mypurpose is to pass butter'})
-				}
-			}}).then(() =>
-			message.reply()
-		)
-		.catch(err => {
-			console.error('Error while sending message to channel', err)
-		})
-	})
-	.catch(err => {
-		console.error('Error while sending message to Recast.AI', err)
-	})
-}
+					message.addReply({ type:'text', content:''})
+					return message.reply()
+				}else if (result.action.slug === 'creator'){
+					message.addReply({
+						type: 'quickReplies',
+						content: {
+							title: 'Would you like his informations ?',
+							buttons: [
+								{
+									title: 'Yes',
+									value: 'details',
+								},
+								{
+									title: 'No',
+									value: 'no'
+								}
+							]
+						}
+					})
+					return message.reply()
+				}else if (result.action.slug === 'details'){
+					message.addReply({
+						type: 'card', content:{
+						title: 'Charles-Henry Desvernay',
+						subtitle: '06********',
+						imageUrl: '../img/id.jpg',
+						buttons: [
+							{
+								title: 'Github',
+								type: 'web_url',
+								value: 'https://github.com/OoCharly'
+							}]
+						}})
+						return message.reply()
+					}}})
+					.catch(err => {
+						console.error('Error while sending message to channel', err)
+					})
+				})
+				.catch(err => {
+					console.error('Error while sending message to Recast.AI', err)
+				})
+			}
 
-module.exports = replyMessage
+			module.exports = replyMessage
