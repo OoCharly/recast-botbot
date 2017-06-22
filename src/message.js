@@ -33,9 +33,7 @@ const replyMessage = (message) => {
 		}
 
 		// If there is not any message return by Recast.AI for this current conversation
-		if (!result.replies.length) {
-			message.addReply({ type: 'text', content: 'I don\'t have the reply to this yet :)' })
-		} else {
+		if (result.replies.length){
 			// Add each reply received from API to replies stack
 			result.replies.forEach(replyContent => message.addReply({ type: 'text', content: replyContent }))
 		}
@@ -65,7 +63,9 @@ const replyMessage = (message) => {
 						return message.reply()
 					})
 				}else if (result.action.slug === 'help'){
-					message.addReply({ type:'text', content:''})
+					message.addReply({ type:'text', content:'My main function is to check the weather in a given place!\n' +
+				'Try it! Type "Is it sunny in Mexico ?"\n' +
+				'I can also give you some informations and contact details about my creator'})
 					return message.reply()
 				}else if (result.action.slug === 'creator'){
 					message.addReply({
