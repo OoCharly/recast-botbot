@@ -66,7 +66,7 @@ const replyMessage = (message) => {
 					message.reply()
 				})
 				}else if (result.action.slug === 'help'){
-					message.addReply({ type:'text' content:'Mypurpose is to pass butter'})
+					message.addReply({ type:'text', content:'Mypurpose is to pass butter'})
 					message.reply();
 				}
 			}})
