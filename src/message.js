@@ -67,7 +67,7 @@ const replyMessage = (message) => {
 				})
 				}else if (result.action.slug === 'help'){
 					message.addReply({ type:'text', content:'Mypurpose is to pass butter'})
-					message.reply();
+					message.reply()
 				}
 			}})
 		.catch(err => {
