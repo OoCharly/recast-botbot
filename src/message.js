@@ -42,7 +42,8 @@ const replyMessage = (message) => {
 		// Send all replies
 		message.reply()
 		.then(() => {
-			if (result.action && result.action.done && result.action.slug === 'weather') {
+			if (result.action && result.action.done){
+				if (result.action.slug === 'weather') {
 				var place = result.getMemory('place')
 				weather(place.lat, place.lng, place.formatted).then( (res) => {
 					message.addReply(res)
@@ -63,12 +64,12 @@ const replyMessage = (message) => {
 						}
 					})
 					message.reply()
-					.catch(err => {
-						console.error('Error while sending message to channel', err)
-					})
 				})
-			}
-		})
+				}else if (result.action.slug === 'help'){
+					message.addReply({ type:'text' content:'Mypurpose is to pass butter'})
+					message.reply();
+				}
+			}})
 		.catch(err => {
 			console.error('Error while sending message to channel', err)
 		})
