@@ -44,32 +44,32 @@ const replyMessage = (message) => {
 		.then(() => {
 			if (result.action && result.action.done){
 				if (result.action.slug === 'weather') {
-				var place = result.getMemory('place')
-				weather(place.lat, place.lng, place.formatted).then( (res) => {
-					message.addReply(res)
-					message.addReply({
-						type: 'quickReplies',
-						content: {
-							title: 'Would you like me to check for another place ?',
-							buttons: [
-								{
-									title: 'Yes',
-									value: 'weather',
-								},
-								{
-									title: 'No',
-									value: 'Bye'
-								}
-							]
-						}
+					var place = result.getMemory('place')
+					weather(place.lat, place.lng, place.formatted).then( (res) => {
+						message.addReply(res)
+						message.addReply({
+							type: 'quickReplies',
+							content: {
+								title: 'Would you like me to check for another place ?',
+								buttons: [
+									{
+										title: 'Yes',
+										value: 'weather',
+									},
+									{
+										title: 'No',
+										value: 'Bye'
+									}
+								]
+							}
+						})
 					})
-					message.reply()
-				})
 				}else if (result.action.slug === 'help'){
 					message.addReply({ type:'text', content:'Mypurpose is to pass butter'})
-					message.reply()
 				}
-			}})
+			}}).then(() =>
+			message.reply()
+		)
 		.catch(err => {
 			console.error('Error while sending message to channel', err)
 		})
