@@ -46,13 +46,29 @@ const replyMessage = (message) => {
 				var place = result.getMemory('place')
 				weather(place.lat, place.lng, place.formatted).then( (res) => {
 					message.addReply(res)
+					message.addReply({
+						type: 'quickReplies',
+						content: {
+							title: 'Would you like me to check for another place ?',
+							buttons: [
+								{
+									title: 'Yes',
+									value: 'weather',
+								},
+								{
+									title: 'No',
+									value: 'Bye'
+								}
+							]
+						}
+					})
 					message.reply()
 					.catch(err => {
 						console.error('Error while sending message to channel', err)
 					})
 				})
-		}
-	})
+			}
+		})
 		.catch(err => {
 			console.error('Error while sending message to channel', err)
 		})
